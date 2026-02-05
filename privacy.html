@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Photo Lock Fingerprint</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #7c3aed;
+            --secondary: #3b82f6;
+            --accent: #06b6d4;
+            --dark-bg: #0f172a;
+            --dark-card: rgba(30, 41, 59, 0.8);
+            --dark-border: rgba(148, 163, 184, 0.1);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --glass-blur: 20px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 50%, #0f172a 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(var(--glass-blur));
+            background: rgba(15, 23, 42, 0.7);
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+            padding-top: 80px;
+        }
+
+        .privacy-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--dark-card);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--dark-border);
+            border-radius: 20px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .privacy-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .privacy-content h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--secondary);
+        }
+
+        .privacy-content h4 {
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .privacy-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .privacy-content li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .privacy-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        footer {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(var(--glass-blur));
+            border-top: 1px solid var(--dark-border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .privacy-content {
+                padding: 1.5rem;
+            }
+
+            .privacy-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .privacy-content h3 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">🔒</div>
+                <span>Photo Lock</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/privacy.html" class="nav-link active">Privacy Policy</a></li>
+                <li><a href="/about.html" class="nav-link">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="privacy-content">
+            <h2>Privacy Policy</h2>
+            <p><strong>Last Updated:</strong> January 2024</p>
+
+            <h3>1. Introduction</h3>
+            <p>Welcome to Photo Vault ("we," "our," or "us"). We are committed to protecting your privacy. This Privacy Policy explains how we handle information in our Photo Vault mobile application.</p>
+            <p><strong>Core Principle:</strong> Photo Vault is designed with privacy as the fundamental principle. The app works completely offline and collects zero data.</p>
+
+            <h3>2. Information We DO NOT Collect</h3>
+            <p>We want to be absolutely clear about what we do NOT collect:</p>
+            <ul>
+                <li><strong>No Personal Information:</strong> We don't collect names, email addresses, phone numbers, or any identifiable information</li>
+                <li><strong>No Photo Access:</strong> We don't access, view, analyze, or upload your photos</li>
+                <li><strong>No Internet Connection:</strong> The app has no internet permission and cannot transmit any data</li>
+                <li><strong>No Analytics:</strong> We don't collect usage statistics, crash reports, or any analytics</li>
+                <li><strong>No Location Data:</strong> We don't collect GPS or location information</li>
+                <li><strong>No Contacts:</strong> We don't access your contact list or social connections</li>
+                <li><strong>No Device Information:</strong> We don't collect device IDs, IMEI numbers, or hardware information</li>
+            </ul>
+
+            <h3>3. How Your Photos Are Handled</h3>
+            <h4>3.1 Storage Location</h4>
+            <p>All photos are stored locally on your device only in the app's private directory. Photos are never uploaded to:</p>
+            <ul>
+                <li>Our servers (we don't have any)</li>
+                <li>Cloud storage services</li>
+                <li>Third-party servers</li>
+                <li>Any external storage</li>
+            </ul>
+
+            <h4>3.2 Security Measures</h4>
+            <ul>
+                <li><strong>PIN Protection:</strong> Your PIN is hashed using SHA-256 algorithm before storage</li>
+                <li><strong>Biometric Security:</strong> Uses Android's built-in Biometric API (we don't handle fingerprint/face data)</li>
+                <li><strong>Android Sandbox:</strong> Photos stored in Android's sandboxed storage, protected by the operating system</li>
+                <li><strong>No Network Access:</strong> The app has no internet permission, preventing any data transmission</li>
+            </ul>
+
+            <h4>3.3 Photo Deletion</h4>
+            <p>When you delete photos:</p>
+            <ul>
+                <li>Photos are permanently deleted from device storage</li>
+                <li>No copies are retained anywhere</li>
+                <li>No recovery is possible through the app</li>
+                <li>Standard Android file recovery tools might recover deleted files until overwritten</li>
+            </ul>
+
+            <h3>4. Permissions Explained</h3>
+            <p>Photo Vault uses minimal permissions:</p>
+            <ul>
+                <li><strong>No Internet Permission:</strong> The app cannot connect to the internet</li>
+                <li><strong>Biometric Permission:</strong> Only for fingerprint/face unlock (handled by Android OS)</li>
+                <li><strong>No Gallery Permission:</strong> Uses Android's Photo Picker API instead (doesn't need access to all photos)</li>
+            </ul>
+
+            <h3>5. Third-Party Services</h3>
+            <p>Photo Vault does NOT use any third-party services:</p>
+            <ul>
+                <li>No advertising networks</li>
+                <li>No analytics services</li>
+                <li>No crash reporting tools</li>
+                <li>No cloud storage providers</li>
+                <li>No social media integrations</li>
+                <li>No payment processors (app is free)</li>
+            </ul>
+
+            <h3>6. Children's Privacy</h3>
+            <p>Photo Vault is safe for all ages because:</p>
+            <ul>
+                <li>We don't collect any personal information</li>
+                <li>No internet connectivity means no data collection</li>
+                <li>No age verification needed</li>
+                <li>No targeted content or advertising</li>
+                <li>Compliant with children's privacy regulations (COPPA)</li>
+            </ul>
+
+            <h3>7. Security</h3>
+            <p>We implement these security measures:</p>
+            <ul>
+                <li>Photos stored in Android's sandboxed private storage</li>
+                <li>PIN protection with SHA-256 hashing</li>
+                <li>Biometric authentication using Android's secure APIs</li>
+                <li>No network connectivity prevents remote access</li>
+                <li>Photos encrypted at the device level</li>
+            </ul>
+            <p><strong>Important:</strong> While we implement security measures, no system is 100% secure. You should:</p>
+            <ul>
+                <li>Keep your device secure</li>
+                <li>Remember your PIN (it cannot be recovered)</li>
+                <li>Back up photos regularly</li>
+                <li>Keep your Android OS updated</li>
+            </ul>
+
+            <h3>8. Data Retention & Deletion</h3>
+            <ul>
+                <li><strong>Photos:</strong> Remain on your device until you delete them</li>
+                <li><strong>App Data:</strong> All app data is deleted when you uninstall the app</li>
+                <li><strong>PIN:</strong> Hashed PIN is stored locally; forgotten PIN requires app reinstallation</li>
+                <li><strong>No Server Data:</strong> We don't have servers, so no data is retained on our end</li>
+            </ul>
+
+            <h3>9. Your Rights</h3>
+            <p>Since we don't collect any data:</p>
+            <ul>
+                <li><strong>Right to Access:</strong> No data exists to access</li>
+                <li><strong>Right to Deletion:</strong> All data is on your device; delete within the app</li>
+                <li><strong>Right to Correction:</strong> Not applicable as no data is collected</li>
+                <li><strong>Right to Portability:</strong> Not applicable as no data is collected</li>
+            </ul>
+
+            <h3>10. Changes to This Policy</h3>
+            <p>We may update this privacy policy. When we do:</p>
+            <ul>
+                <li>We'll update the "Last Updated" date</li>
+                <li>Significant changes will be noted in app updates</li>
+                <li>Continued use of the app means acceptance of changes</li>
+            </ul>
+
+            <h3>11. Contact Information</h3>
+            <p>For privacy-related questions:</p>
+            <ul>
+                <li><strong>Email:</strong> privacy@photovault.app</li>
+                <li><strong>Response Time:</strong> We aim to respond within 48 hours</li>
+                <li><strong>Note:</strong> For technical support, use: support@photovault.app</li>
+            </ul>
+
+            <h3>12. Governing Law</h3>
+            <p>This Privacy Policy is governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts in Bangalore, India.</p>
+
+            <h3>13. Compliance</h3>
+            <p>Photo Vault complies with:</p>
+            <ul>
+                <li>Google Play Store policies</li>
+                <li>Android privacy guidelines</li>
+                <li>General Data Protection principles</li>
+                <li>Children's Online Privacy Protection Act (COPPA)</li>
+            </ul>
+
+            <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--dark-border);"><strong>Summary:</strong> Photo Vault doesn't collect, store, or transmit any of your data. Your photos remain on your device, protected by PIN/fingerprint, and never leave your possession.</p>
+            <p>By using Photo Vault, you acknowledge that you have read and understood this Privacy Policy.</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/about.html">About Us</a>
+            </div>
+            <p>&copy; 2024 Photo Lock Fingerprint by Kgn Solution. All rights reserved.</p>
+            <p style="font-size
+(Content truncated due to size limit. Use line ranges to read remaining content)

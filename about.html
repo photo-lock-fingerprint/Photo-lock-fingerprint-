@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Photo Lock Fingerprint</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #7c3aed;
+            --secondary: #3b82f6;
+            --accent: #06b6d4;
+            --dark-bg: #0f172a;
+            --dark-card: rgba(30, 41, 59, 0.8 );
+            --dark-border: rgba(148, 163, 184, 0.1);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --glass-blur: 20px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 50%, #0f172a 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(var(--glass-blur));
+            background: rgba(15, 23, 42, 0.7);
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+            padding-top: 80px;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--dark-card);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--dark-border);
+            border-radius: 20px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .about-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .about-content h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--secondary);
+        }
+
+        .about-content h4 {
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .about-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-content li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .about-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid var(--dark-border);
+        }
+
+        .comparison-table th {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        footer {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(var(--glass-blur));
+            border-top: 1px solid var(--dark-border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .about-content {
+                padding: 1.5rem;
+            }
+
+            .about-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .about-content h3 {
+                font-size: 1.1rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">🔒</div>
+                <span>Photo Lock</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/privacy.html" class="nav-link">Privacy Policy</a></li>
+                <li><a href="/about.html" class="nav-link active">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="about-content">
+            <h2>About Photo Vault</h2>
+
+            <h3>Our Mission</h3>
+            <p>At Photo Vault, we believe privacy is a fundamental human right, not a luxury. In today's digital world where personal data is constantly collected, tracked, and monetized, we offer a sanctuary for your private memories.</p>
+            <p>Our mission is simple: Provide everyone with secure, private photo storage that respects your privacy and gives you complete control over your personal photos.</p>
+
+            <h3>Why We Created Photo Vault</h3>
+            <p>We created Photo Vault out of frustration with existing "secure" photo apps that:</p>
+            <ul>
+                <li>Require internet permissions</li>
+                <li>Collect user data</li>
+                <li>Show intrusive ads</li>
+                <li>Store photos on their servers</li>
+                <li>Charge monthly subscriptions for basic privacy</li>
+            </ul>
+            <p>We asked: "What if a photo vault actually respected privacy?" The answer became Photo Vault.</p>
+
+            <h3>Our Core Principles</h3>
+
+            <h4>1. Privacy First</h4>
+            <p>Every feature in Photo Vault is designed with privacy as the core principle. We don't collect data because we don't need to. The app works perfectly offline.</p>
+
+            <h4>2. Complete Transparency</h4>
+            <p>We're clear about what we do (and don't do):</p>
+            <ul>
+                <li>We don't have access to your photos</li>
+                <li>We don't collect analytics</li>
+                <li>We don't show ads</li>
+                <li>We don't charge money</li>
+            </ul>
+
+            <h4>3. Security Without Compromise</h4>
+            <ul>
+                <li>PIN protection with SHA-256 hashing</li>
+                <li>Biometric authentication using Android's secure APIs</li>
+                <li>Local storage only - no cloud backups</li>
+                <li>No internet connectivity = no data leaks</li>
+            </ul>
+
+            <h4>4. Free Forever</h4>
+            <p>Privacy shouldn't cost money. Photo Vault is completely free with no:</p>
+            <ul>
+                <li>Hidden charges</li>
+                <li>In-app purchases</li>
+                <li>Subscription fees</li>
+                <li>Feature limitations</li>
+            </ul>
+
+            <h3>How Photo Vault Works</h3>
+
+            <h4>For Users:</h4>
+            <ol>
+                <li>Set Your PIN: Create a secure 6-digit PIN</li>
+                <li>Add Photos: Select photos using Android's secure Photo Picker</li>
+                <li>Photos Are Secured: Originals removed from public gallery</li>
+                <li>Access Anytime: Unlock with PIN or fingerprint</li>
+                <li>Recover When Needed: Restore photos to gallery with one tap</li>
+            </ol>
+
+            <h4>Technical Architecture:</h4>
+            <ul>
+                <li><strong>Platform:</strong> Native Android (Kotlin/Java)</li>
+                <li><strong>Security:</strong> SHA-256 hashing, Android Biometric API</li>
+                <li><strong>Storage:</strong> Local device storage only</li>
+                <li><strong>Permissions:</strong> Minimal - no internet, no gallery access</li>
+                <li><strong>Design:</strong> Material Design 3 compliant</li>
+            </ul>
+
+            <h3>What Makes Us Different</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Photo Vault</th>
+                        <th>Other "Secure" Apps</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Internet Permission</td>
+                        <td>❌ None required</td>
+                        <td>✅ Required</td>
+                    </tr>
+                    <tr>
+                        <td>Data Collection</td>
+                        <td>❌ Zero data collected</td>
+                        <td>✅ Analytics, usage data</td>
+                    </tr>
+                    <tr>
+                        <td>Cloud Storage</td>
+                        <td>❌ Photos stay on device</td>
+                        <td>✅ Photos uploaded to servers</td>
+                    </tr>
+                    <tr>
+                        <td>Cost</td>
+                        <td>✅ Completely free</td>
+                        <td>❌ Ads or subscriptions</td>
+                    </tr>
+                    <tr>
+                        <td>Transparency</td>
+                        <td>✅ Clear about what we don't collect</td>
+                        <td>❌ Hidden data practices</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Our Promise to You</h3>
+
+            <h4>1. Your Photos Belong to You</h4>
+            <p>We don't claim ownership, don't analyze, and don't upload your photos anywhere. They remain on your device, under your control.</p>
+
+            <h4>2. No Hidden Terms</h4>
+            <p>What you see is what you get:</p>
+            <ul>
+                <li>Free forever</li>
+                <li>No data collection</li>
+                <li>Complete privacy</li>
+                <li>Regular updates</li>
+            </ul>
+
+            <h4>3. We're Here to Help</h4>
+            <p>We're real people who care about privacy. Contact us anytime with questions, suggestions, or feedback.</p>
+
+            <h3>The Team Behind Photo Vault</h3>
+            <p>We're a small team of privacy-conscious developers who believe technology should protect users, not exploit them. Based in India, we understand the importance of digital privacy in today's connected world.</p>
+
+            <p><strong>Our Credentials:</strong></p>
+            <ul>
+                <li>5+ years in Android development</li>
+                <li>Experience in security and cryptography</li>
+                <li>Passion for privacy-focused software</li>
+                <li>Commitment to ethical technology</li>
+            </ul>
+
+            <h3>Our Commitment to Improvement</h3>
+
+            <h4>Current Features:</h4>
+            <ul>
+                <li>PIN protection with SHA-256 hashing</li>
+                <li>Fingerprint/face unlock support</li>
+                <li>Photo recovery to gallery</li>
+                <li>Modern Material Design 3 interface</li>
+                <li>Complete offline functionality</li>
+            </ul>
+
+            <h4>Coming Soon:</h4>
+            <ul>
+                <li>Optional encrypted cloud backup</li>
+                <li>Break-in attempt alerts</li>
+                <li>Additional security features</li>
+                <li>Performance improvements</li>
+                <li>User-requested features</li>
+            </ul>
+
+            <h3>Why Trust Photo Vault?</h3>
+
+            <h4>1. Technical Transparency</h4>
+            <ul>
+                <li>No hidden code</li>
+                <li>No data transmission</li>
+                <li>Open about security measures</li>
+                <li>Regular security audits</li>
+            </ul>
+
+            <h4>2. Ethical Foundation</h4>
+            <ul>
+                <li>Privacy as a right, not a feature</li>
+                <li>User control over data</li>
+                <li>No dark patterns</li>
+                <li>Honest communication</li>
+            </ul>
+
+            <h4>3. Community Focused</h4>
+            <ul>
+                <li>Listen to user feedback</li>
+                <li>Prioritize user-requested features</li>
+                <li>Respond to support requests</li>
+                <li>Build for real people, not profits</li>
+            </ul>
+
+            <h3>Our Vision for the Future</h3>
+            <p>We envision a world where:</p>
+            <ul>
+                <li>Privacy is the default, not an option</li>
+                <li>Users control their data completely</li>
+                <li>Technology serves people, not corporations</li>
+                <li>Security is accessible to everyone</li>
+            </ul>
+            <p>Photo Vault is our contribution to this vision - one photo at a time.</p>
+
+            <h3>Join Our Privacy Movement</h3>
+            <p>By using Photo Vault, you're not just securing your photos - you're supporting:</p>
+            <ul>
+                <li>Privacy-focused development</li>
+                <li>Ethical technology practices</li>
+                <li>User empowerment</li>
+                <li>A future where privacy matters</li>
+            </ul>
+
+            <h3>Contact Us</h3>
+            <p>We'd love to hear from you:</p>
+            <ul>
+                <li><strong>For Support:</strong> support@photovault.app</li>
+                <li><strong>For Suggestions:</strong> feedback@photovault.app</li>
+                <li><strong>For Privacy Concerns:</strong> privacy@photovault.app</li>
+            </ul>
+            <p><strong>Response Time:</strong> We aim to respond within 24-48 hours</p>
+
+            <h3>Final Word</h3>
+            <p>Photo Vault is more than just an app - it's a statement. A statement that privacy matters, that users deserve control, and that technology can be both powerful and respectful.</p>
+            <p>Thank you for choosing Photo Vault. Your trust is our greatest reward.</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/about.html">About Us</a>
+            </div>
+            <p>&copy; 2024 Photo Lock Fingerprint by Kgn Solution. All rights reserved.</p>
+            <p style="font-size: 0.9rem; margin-top: 1rem;">Secure. Private. Offline.</p>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <script>
+        const backToTopBtn = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>

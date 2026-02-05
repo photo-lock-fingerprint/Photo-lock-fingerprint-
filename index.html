@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Lock Fingerprint - Secure Your Private Photos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #7c3aed;
+            --secondary: #3b82f6;
+            --accent: #06b6d4;
+            --dark-bg: #0f172a;
+            --dark-card: rgba(30, 41, 59, 0.8);
+            --dark-border: rgba(148, 163, 184, 0.1);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --glass-blur: 20px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 50%, #0f172a 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(var(--glass-blur));
+            background: rgba(15, 23, 42, 0.7);
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .nav-container {
+                padding: 1rem;
+            }
+        }
+
+        /* Main content wrapper */
+        main {
+            position: relative;
+            z-index: 1;
+            padding-top: 80px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .app-icon-container {
+            margin-bottom: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .app-icon {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 40px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .version {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(124, 58, 237, 0.5);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.4);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Features Section */
+        .features {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--dark-card);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--dark-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.5), transparent);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(124, 58, 237, 0.3);
+            background: rgba(30, 41, 59, 0.95);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Screenshots Section */
+        .screenshots {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .screenshot-placeholder {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(59, 130, 246, 0.2));
+            border: 2px solid var(--dark-border);
+            border-radius: 20px;
+            aspect-ratio: 9/16;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 0;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            max-width: 250px;
+            margin: 0 auto;
+        }
+
+        .screenshot-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .screenshot-placeholder:hover {
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(var(--glass-blur));
+            border-top: 1px solid var(--dark-border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .feature-card {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .app-icon {
+                width: 140px;
+                height: 140px;
+                border-radius: 35px;
+            }
+
+            .app-icon img {
+                border-radius: 35px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-button {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Page-specific styles */
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        .privacy-content,
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--dark-card);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--dark-border);
+            border-radius: 20px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .privacy-content h2,
+        .about-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .privacy-content h3,
+        .about-content h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--secondary);
+        }
+
+        .privacy-content ul,
+        .about-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .privacy-content li,
+        .about-content li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .privacy-content p,
+        .about-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid var(--dark-border);
+        }
+
+        .comparison-table th {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">🔒</div>
+                <span>Photo Lock</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link active" data-page="home">Home</a></li>
+                <li><a href="/privacy.html" class="nav-link" data-page="privacy">Privacy Policy</a></li>
+                <li><a href="/about.html" class="nav-link" data-page="about">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <div id="home-page" class="page-content active">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <div class="app-icon-container">
+                        <div class="app-icon">
+                        <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663325265459/AhfGvBFFOndTuxmX.png" alt="Photo Lock Fingerprint App Icon">
+                    </div>
+                    </div>
+                    <h1>Photo Lock Fingerprint</h1>
+                    <p>Secure your private photos & videos with military-grade encryption</p>
+                    <div class="version">v1.0.0</div>
+                    <a href="https://play.google.com/store/apps/details?id=com.kgnsolution.photolock" class="cta-button" target="_blank">
+                        <span>Get it on Google Play</span>
+                        <span>→</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features">
+                <h2 class="section-title">Key Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">👆</div>
+                        <h3>Fingerprint Lock</h3>
+                        <p>Unlock your vault instantly with biometric authentication</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔑</div>
+                        <h3>PIN Protection</h3>
+                        <p>Secure 6-digit PIN with SHA-256 encryption</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🖼️</div>
+                        <h3>Hide Photos & Videos</h3>
+                        <p>Keep your memories completely private and hidden</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Offline & Secure</h3>
+                        <p>Works completely offline, zero data collection</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screenshots Section -->
+            <!-- Screenshots Section -->
+<section class="screenshots">
+  <h2 class="section-title">App Screenshots</h2>
+  <div class="screenshots-grid">
+    <!-- Screenshot 1 -->
+    <div class="screenshot-placeholder">
+      <img src="screenshot1.png" alt="Photo Lock - Fingerprint Login Screen">
+    </div>
+    
+    <!-- Screenshot 2 -->
+    <div class="screenshot-placeholder">
+      <img src="screenshot2.png" alt="Photo Lock - Hidden Photos Gallery">
+    </div>
+    
+    <!-- Screenshot 3 -->
+    <div class="screenshot-placeholder">
+      <img src="screenshot3.png" alt="Photo Lock - Create Secure PIN">
+    </div>
+    
+    <!-- Screenshot 4 -->
+    <div class="screenshot-placeholder">
+      <img src="screenshot4.png" alt="Photo Lock - Select Photos to Hide">
+    </div>
+    
+    <!-- Screenshot 5 (Optional) -->
+    <div class="screenshot-placeholder">
+      <img src="screenshot5.png" alt="Photo Lock - Security Settings">
+    </div>
+    
+    <!-- Screenshot 6 (Optional) -->
+    <div class="screenshot-placeholder">
+      <img src="screenshot6.png" alt="Photo Lock - App Interface">
+    </div>
+  </div>
+</section>
+        </div>
+
+        <!-- Privacy Policy Page -->
+        <div id="privacy-page" class="page-content">
+            <div class="privacy-content">
+                <h2>Privacy Policy</h2>
+                <p><strong>Last Updated:</strong> January 2024</p>
+
+                <h3>1. Introduction</h3>
+                <p>Welcome to Photo Vault ("we," "our," or "us"). We are committed to protecting your privacy. This Privacy Policy explains how we handle information in our Photo Vault mobile application.</p>
+                <p><strong>Core Principle:</strong> Photo Vault is designed with privacy as the fundamental principle. The app works completely offline and collects zero data.</p>
+
+                <h3>2. Information We DO NOT Collect</h3>
+                <p>We want to be absolutely clear about what we do NOT collect:</p>
+                <ul>
+                    <li><strong>No Personal Information:</strong> We don't collect names, email addresses, phone numbers, or any identifiable information</li>
+                    <li><strong>No Photo Access:</strong> We don't access, view, analyze, or upload your photos</li>
+                    <li><strong>No Internet Connection:</strong> The app has no internet permission and cannot transmit any data</li>
+                    <li><strong>No Analytics:</strong> We don't collect usage statistics, crash reports, or any analytics</li>
+                    <li><strong>No Location Data:</strong> We don't collect GPS or location information</li>
+                    <li><strong>No Contacts:</strong> We don't access your contact list or social connections</li>
+                    <li><strong>No Device Information:</strong> We don't collect device IDs, IMEI numbers, or hardware information</li>
+                </ul>
+
+                <h3>3. How Your Photos Are Handled</h3>
+                <h4>3.1 Storage Location</h4>
+                <p>All photos are stored locally on your device only in the app's private directory. Photos are never uploaded to:</p>
+                <ul>
+                    <li>Our servers (we don't have any)</li>
+                    <li>Cloud storage services</li>
+                    <li>Third-party servers</li>
+                    <li>Any external storage</li>
+                </ul>
+
+                <h4>3.2 Security Measures</h4>
+                <ul>
+                    <li><strong>PIN Protection:</strong> Your PIN is hashed using SHA-256 algorithm before storage</li>
+                    <li><strong>Biometric Security:</strong> Uses Android's built-in Biometric API (we don't handle fingerprint/face data)</li>
+                    <li><strong>Android Sandbox:</strong> Photos stored in Android's sandboxed storage, protected by the operating system</li>
+                    <li><strong>No Network Access:</strong> The app has no internet permission, preventing any data transmission</li>
+                </ul>
+
+                <h4>3.3 Photo Deletion</h4>
+                <p>When you delete photos:</p>
+                <ul>
+                    <li>Photos are permanently deleted from device storage</li>
+                    <li>No copies are retained anywhere</li>
+                    <li>No recovery is possible through the app</li>
+                    <li>Standard Android file recovery tools might recover deleted files until overwritten</li>
+                </ul>
+
+                <h3>4. Permissions Explained</h3>
+                <p>Photo Vault uses minimal permissions:</p>
+                <ul>
+                    <li><strong>No Internet Permission:</strong> The app cannot connect to the internet</li>
+                    <li><strong>Biometric Permission:</strong> Only for fingerprint/face unlock (handled by Android OS)</li>
+                    <li><strong>No Gallery Permission:</strong> Uses Android's Photo Picker API instead (doesn't need access to all photos)</li>
+                </ul>
+
+                <h3>5. Third-Party Services</h3>
+                <p>Photo Vault does NOT use any third-party services:</p>
+                <ul>
+                    <li>No advertising networks</li>
+                    <li>No analytics services</li>
+                    <li>No crash reporting tools</li>
+                    <li>No cloud storage providers</li>
+                    <li>No social media integrations</li>
+                    <li>No payment processors (app is free)</li>
+                </ul>
+
+                <h3>6. Children's Privacy</h3>
+                <p>Photo Vault is safe for all ages because:</p>
+                <ul>
+                    <li>We don't collect any personal information</li>
+                    <li>No internet connectivity means no data collection</li>
+                    <li>No age verification needed</li>
+                    <li>No targeted content or advertising</li>
+                    <li>Compliant with children's privacy regulations (COPPA)</li>
+                </ul>
+
+                <h3>7. Security</h3>
+                <p>We implement these security measures:</p>
+                <ul>
+                    <li>Photos stored in Android's sandboxed private storage</li>
+                    <li>PIN protection with SHA-256 hashing</li>
+                    <li>Biometric authentication using Android's secure APIs</li>
+                    <li>No network connectivity prevents remote access</li>
+                    <li>Photos encrypted at the device level</li>
+                </ul>
+                <p><strong>Important:</strong> While we implement security measures, no system is 100% secure. You should:</p>
+                <ul>
+                    <li>Keep your device secure</li>
+                    <li>Remember your PIN (it cannot be recovered)</li>
+                    <li>Back up photos regularly</li>
+                    <li>Keep your Android OS updated</li>
+                </ul>
+
+                <h3>8. Data Retention & Deletion</h3>
+                <ul>
+                    <li><strong>Photos:</strong> Remain on your device until you delete them</li>
+                    <li><strong>App Data:</strong> All app data is deleted when you uninstall the app</li>
+                    <li><strong>PIN:</strong> Hashed PIN is stored locally; forgotten PIN requires app reinstallation</li>
+                    <li><strong>No Server Data:</strong> We don't have servers, so no data is retained on our end</li>
+                </ul>
+
+                <h3>9. Your Rights</h3>
+                <p>Since we don't collect any data:</p>
+                <ul>
+                    <li><strong>Right to Access:</strong> No data exists to access</li>
+                    <li><strong>Right to Deletion:</strong> All data is on your device; delete within the app</li>
+                    <li><strong>Right to Correction:</strong> Not applicable as no data is collected</li>
+                    <li><strong>Right to Portability:</strong> Not applicable as no data is collected</li>
+                </ul>
+
+                <h3>10. Changes to This Policy</h3>
+                <p>We may update this privacy policy. When we do:</p>
+                <ul>
+                    <li>We'll update the "Last Updated" date</li>
+                    <li>Significant changes will be noted in app updates</li>
+                    <li>Continued use of the app means acceptance of changes</li>
+                </ul>
+
+                <h3>11. Contact Information</h3>
+                <p>For privacy-related questions:</p>
+                <ul>
+                    <li><strong>Email:</strong> privacy@photovault.app</li>
+                    <li><strong>Response Time:</strong> We aim to respond within 48 hours</li>
+                    <li><strong>Note:</strong> For technical support, use: support@photovault.app</li>
+                </ul>
+
+                <h3>12. Governing Law</h3>
+                <p>This Privacy Policy is governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts in Bangalore, India.</p>
+
+                <h3>13. Compliance</h3>
+                <p>Photo Vault complies with:</p>
+                <ul>
+                    <li>Google Play Store policies</li>
+                    <li>Android privacy guidelines</li>
+                    <li>General Data Protection principles</li>
+                    <li>Children's Online Privacy Protection Act (COPPA)</li>
+                </ul>
+
+                <p style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--dark-border);"><strong>Summary:</strong> Photo Vault doesn't collect, store, or transmit any of your data. Your photos remain on your device, protected by PIN/fingerprint, and never leave your possession.</p>
+                <p>By using Photo Vault, you acknowledge that you have read and understood this Privacy Policy.</p>
+            </div>
+        </div>
+
+        <!-- About Us Page -->
+        <div id="about-page" class="page-content">
+            <div class="about-content">
+                <h2>About Photo Vault</h2>
+
+                <h3>Our Mission</h3>
+                <p>At Photo Vault, we believe privacy is a fundamental human right, not a luxury. In today's digital world where personal data is constantly collected, tracked, and monetized, we offer a sanctuary for your private memories.</p>
+                <p>Our mission is simple: Provide everyone with secure, private photo storage that respects your privacy and gives you complete control over your personal photos.</p>
+
+                <h3>Why We Created Photo Vault</h3>
+                <p>We created Photo Vault out of frustration with existing "secure" photo apps that:</p>
+                <ul>
+                    <li>Require internet permissions</li>
+                    <li>Collect user data</li>
+                    <li>Show intrusive ads</li>
+                    <li>Store photos on their servers</li>
+                    <li>Charge monthly subscriptions for basic privacy</li>
+                </ul>
+                <p>We asked: "What if a photo vault actually respected privacy?" The answer became Photo Vault.</p>
+
+                <h3>Our Core Principles</h3>
+
+                <h4>1. Privacy First</h4>
+                <p>Every feature in Photo Vault is designed with privacy as the core principle. We don't collect data because we don't need to. The app works perfectly offline.</p>
+
+                <h4>2. Complete Transparency</h4>
+                <p>We're clear about what we do (and don't do):</p>
+                <ul>
+                    <li>We don't have access to your photos</li>
+                    <li>We don't collect analytics</li>
+                    <li>We don't show ads</li>
+                    <li>We don't charge money</li>
+                </ul>
+
+                <h4>3. Security Without Compromise</h4>
+                <ul>
+                    <li>PIN protection with SHA-256 hashing</li>
+                    <li>Biometric authentication using Android's secure APIs</li>
+                    <li>Local storage only - no cloud backups</li>
+                    <li>No internet connectivity = no data leaks</li>
+                </ul>
+
+                <h4>4. Free Forever</h4>
+                <p>Privacy shouldn't cost money. Photo Vault is completely free with no:</p>
+                <ul>
+                    <li>Hidden charges</li>
+                    <li>In-app purchases</li>
+                    <li>Subscription fees</li>
+                    <li>Feature limitations</li>
+                </ul>
+
+                <h3>How Photo Vault Works</h3>
+
+                <h4>For Users:</h4>
+                <ol style="margin-left: 1.5rem;">
+                    <li>Set Your PIN: Create a secure 6-digit PIN</li>
+                    <li>Add Photos: Select photos using Android's secure Photo Picker</li>
+                    <li>Photos Are Secured: Originals removed from public gallery</li>
+                    <li>Access Anytime: Unlock with PIN or fingerprint</li>
+                    <li>Recover When Needed: Restore photos to gallery with one tap</li>
+                </ol>
+
+                <h4>Technical Architecture:</h4>
+                <ul>
+                    <li><strong>Platform:</strong> Native Android (Kotlin/Java)</li>
+                    <li><strong>Security:</strong> SHA-256 hashing, Android Biometric API</li>
+                    <li><strong>Storage:</strong> Local device storage only</li>
+                    <li><strong>Permissions:</strong> Minimal - no internet, no gallery access</li>
+                    <li><strong>Design:</strong> Material Design 3 compliant</li>
+                </ul>
+
+                <h3>What Makes Us Different</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Photo Vault</th>
+                            <th>Other "Secure" Apps</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Internet Permission</td>
+                            <td>❌ None required</td>
+                            <td>✅ Required</td>
+                        </tr>
+                        <tr>
+                            <td>Data Collection</td>
+                            <td>❌ Zero data collected</td>
+                            <td>✅ Analytics, usage data</td>
+                        </tr>
+                        <tr>
+                            <td>Cloud Storage</td>
+                            <td>❌ Photos stay on device</td>
+                            <td>✅ Photos uploaded to servers</td>
+                        </tr>
+                        <tr>
+                            <td>Cost</td>
+                            <td>✅ Completely free</td>
+                            <td>❌ Ads or subscriptions</td>
+                        </tr>
+                        <tr>
+                            <td>Transparency</td>
+                            <td>✅ Clear about what we don't collect</td>
+                            <td>❌ Hidden data practices</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Our Promise to You</h3>
+
+                <h4>1. Your Photos Belong to You</h4>
+                <p>We don't claim ownership, don't analyze, and don't upload your photos anywhere. They remain on your device, under your control.</p>
+
+                <h4>2. No Hidden Terms</h4>
+                <p>What you see is what you get:</p>
+                <ul>
+                    <li>Free forever</li>
+                    <li>No data collection</li>
+                    <li>Complete privacy</li>
+                    <li>Regular updates</li>
+                </ul>
+
+                <h4>3. We're Here to Help</h4>
+                <p>We're real people who care about privacy. Contact us anytime with questions, suggestions, or feedback.</p>
+
+                <h3>The Team Behind Photo Vault</h3>
+                <p>We're a small team of privacy-conscious developers who believe technology should protect users, not exploit them. Based in India, we understand the importance of digital privacy in today's connected world.</p>
+
+                <p><strong>Our Credentials:</strong></p>
+                <ul>
+                    <li>5+ years in Android development</li>
+                    <li>Experience in security and cryptography</li>
+                    <li>Passion for privacy-focused software</li>
+                    <li>Commitment to ethical technology</li>
+                </ul>
+
+                <h3>Our Commitment to Improvement</h3>
+
+                <h4>Current Features:</h4>
+                <ul>
+                    <li>PIN protection with SHA-256 hashing</li>
+                    <li>Fingerprint/face unlock support</li>
+                    <li>Photo recovery to gallery</li>
+                    <li>Modern Material Design 3 interface</li>
+                    <li>Complete offline functionality</li>
+                </ul>
+
+                <h4>Coming Soon:</h4>
+                <ul>
+                    <li>Optional encrypted cloud backup</li>
+                    <li>Break-in attempt alerts</li>
+                    <li>Additional security features</li>
+                    <li>Performance improvements</li>
+                    <li>User-requested features</li>
+                </ul>
+
+                <h3>Why Trust Photo Vault?</h3>
+
+                <h4>1. Technical Transparency</h4>
+                <ul>
+                    <li>No hidden code</li>
+                    <li>No data transmission</li>
+                    <li>Open about security measures</li>
+                    <li>Regular security audits</li>
+                </ul>
+
+                <h4>2. Ethical Foundation</h4>
+                <ul>
+                    <li>Privacy as a right, not a feature</li>
+                    <li>User control over data</li>
+                    <li>No dark patterns</li>
+                    <li>Honest communication</li>
+                </ul>
+
+                <h4>3. Community Focused</h4>
+                <ul>
+                    <li>Listen to user feedback</li>
+                    <li>Prioritize user-requested features</li>
+                    <li>Respond to support requests</li>
+                    <li>Build for real people, not profits</li>
+                </ul>
+
+                <h3>Our Vision for the Future</h3>
+                <p>We envision a world where:</p>
+                <ul>
+                    <li>Privacy is the default, not an option</li>
+                    <li>Users control their data completely</li>
+                    <li>Technology serves people, not corporations</li>
+                    <li>Security is accessible to everyone</li>
+                </ul>
+                <p>Photo Vault is our contribution to this vision - one photo at a time.</p>
+
+                <h3>Join Our Privacy Movement</h3>
+                <p>By using Photo Vault, you're not just securing your photos - you're supporting:</p>
+                <ul>
+                    <li>Privacy-focused development</li>
+                    <li>Ethical technology practices</li>
+                    <li>User empowerment</li>
+                    <li>A future where privacy matters</li>
+                </ul>
+
+                <h3>Contact Us</h3>
+                <p>We'd love to hear from you:</p>
+                <ul>
+                    <li><strong>For Support:</strong> support@photovault.app</li>
+                    <li><strong>For Suggestions:</strong> feedback@photovault.app</li>
+                    <li><strong>For Privacy Concerns:</strong> privacy@photovault.app</li>
+                </ul>
+                <p><strong>Response Time:</strong> We aim to respond within 24-48 hours</p>
+
+                <h3>Final Word</h3>
+                <p>Photo Vault is more than just an app - it's a statement. A statement that privacy matters, that users deserve control, and that technology can be both powerful and respectful.</p>
+                <p>Thank you for choosing Photo Vault. Your trust is our greatest reward.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/about.html">About Us</a>
+            </div>
+            <p>&copy; 2024 Photo Lock Fingerprint by Kgn Solution. All rights reserved.</p>
+            <p style="font-size: 0.9rem; margin-top: 1rem;">Secure. Private. Offline.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <script>
+        // Navigation and page routing
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pageContents = document.querySelectorAll('.page-content');
+        const backToTopBtn = document.getElementById('backToTop');
+
+        function showPage(pageName) {
+            // Hide all pages
+            pageContents.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            const selectedPage = document.getElementById(`${pageName}-page`);
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+
+            // Update nav links
+            navLinks.forEach(link => link.classList.remove('active'));
+            const activeLink = document.querySelector(`[data-page="${pageName}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+
+        // Handle navigation clicks
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageName = link.getAttribute('data-page');
+                showPage(pageName);
+                history.pushState(null, '', `/${pageName === 'home' ? '' : pageName + '.html'}`);
+            });
+        });
+
+        // Handle browser back/forward
+        window.addEventListener('popstate', () => {
+            const path = window.location.pathname;
+            if (path === '/' || path === '') {
+                showPage('home');
+            } else if (path.includes('privacy')) {
+                showPage('privacy');
+            } else if (path.includes('about')) {
+                showPage('about');
+            }
+        });
+
+        // Back to top button
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Initialize based on current URL
+        const path = window.location.pathname;
+        if (path.includes('privacy')) {
+            showPage('privacy');
+        } else if (path.includes('about')) {
+            showPage('about');
+        } else {
+            showPage('home');
+        }
+    </script>
+</body>
+</html>
